@@ -1,0 +1,4 @@
+class SensorPeso:
+  def __init__(self, date, valor):
+    self.date = date
+    self.valor = valor
