@@ -1,6 +1,6 @@
-class SensorGPS:
-    def __init__(self, id, latitud, longitud, date):
-        self.id = id
-        self.latitud = latitud
-        self.longitud = longitud
-        self.date = date
+from Metodos.Controlador import Controlador
+class SensorGPS(Controlador):
+  def __init__(self, date, valor):
+      super().__init__()
+      self.date = date
+      self.valor = valor
