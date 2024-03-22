@@ -5,7 +5,6 @@ class ISFInterfaz():
                 self.ISFisico = ISF()
                 self.isConected = True 
                 self.ISFisico.cargar_desde_archivo("InfoSensorFisico.json")
-        else:
-                self.ISFisico = ISF()
-                self.isConected = False
-           
+        self.ISFisico = ISF()
+        self.isConected = False
+        

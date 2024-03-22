@@ -4,10 +4,10 @@ class   Data():
         self.isConected= valor==None and fecha_hora==None 
         if self.isConected:  
             self.arreglo=[]
-        else:
-            self.arreglo=None
-            self.tipo= valor
-            self.unidad = fecha_hora
-          
-            
+    
+        self.arreglo=None
+        self.tipo= valor
+        self.unidad = fecha_hora
         
+        
+    
