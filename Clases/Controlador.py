@@ -1,4 +1,6 @@
+import serial
 import json
+
 class Controlador:
   def __init__(self):
     self.data = []
@@ -108,10 +110,19 @@ class Controlador:
       with open(archivo, "w") as file:
           json.dump(existing_data, file, indent=4, default=lambda x: 
               x.to_dict() if hasattr(x, 'to_dict') else x)
-          
-          
-          
 
-          
-      
-  
+  def read_serial(self):
+      ser = serial.Serial("/dev/ttyUSB0", 9600)
+      try:
+            while True:
+                  data = ser.readline().decode().strip()
+                  print(data)
+      except KeyboardInterrupt:
+            ser.close()
+            print("Conexion cerrada")
+            return data
+
+if __name__ == "__main__":
+   c = Controlador()
+   c.read_serial()
+   
