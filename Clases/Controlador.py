@@ -110,19 +110,22 @@ class Controlador:
       with open(archivo, "w") as file:
           json.dump(existing_data, file, indent=4, default=lambda x: 
               x.to_dict() if hasattr(x, 'to_dict') else x)
+  
+  def read_serial(self, port="/dev/ttyUSB0", baud=9600):
+        with serial.Serial(port, baud) as ser:
+            try:
+                while True:
+                    data = ser.readline().decode().strip()
+                    yield self.format_data_serial(data)
+            except KeyboardInterrupt:
+                pass
 
-  def read_serial(self):
-      ser = serial.Serial("/dev/ttyUSB0", 9600)
-      try:
-            while True:
-                  data = ser.readline().decode().strip()
-                  print(data)
-      except KeyboardInterrupt:
-            ser.close()
-            print("Conexion cerrada")
-            return data
+  def format_data_serial(self, data):
+     return data.split("*")
+      
 
 if __name__ == "__main__":
-   c = Controlador()
-   c.read_serial()
-   
+  controlador = Controlador()
+  for data in controlador.read_serial():
+     print(data)
+  
