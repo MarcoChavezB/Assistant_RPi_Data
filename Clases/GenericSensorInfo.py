@@ -1,4 +1,4 @@
-class IGS():
+class GenericSensorInfo():
     def __init__(self, tipo=None, unidad=None, descripcion_sensor=None):
         super().__init__()
         self.isConected= tipo==None and unidad==None and descripcion_sensor==None 

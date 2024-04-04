@@ -1,8 +1,6 @@
-from Controlador import Controlador
-from Carrito import Carrito
 from Data import Data
 
-class   ISF():
+class PhysicalSensorInfo():
     def __init__(self, No_Sensor=None, puertos=None):
         super().__init__()
         self.isConected= No_Sensor==None and puertos==None 
@@ -31,7 +29,7 @@ class   ISF():
                 return False
         isf_list = []
         for isf_data in data:
-                isf_instance = ISF(
+                isf_instance = PhysicalSensorInfo(
                 No_Sensor=isf_data['No_Sensor'],
                 puertos=isf_data['puertos'],
                 )

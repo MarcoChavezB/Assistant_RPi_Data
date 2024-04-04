@@ -1,5 +1,5 @@
-from ISF import ISF
-class ISFInterfaz():
+from Clases.PhysicalSensorInfo import PhysicalSensorInfo
+class PhysicalSensorInterface():
     def __init__(self, ISF =None ):
         if ISF is None:
                 self.ISFisico = ISF()
