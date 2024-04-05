@@ -3,4 +3,5 @@ import platform
 
 controlador = Controlador() 
 for data in controlador.read_serial():
-  print(data)
+  print(data[0])
+  
