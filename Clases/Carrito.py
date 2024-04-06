@@ -33,7 +33,7 @@ class Carrito():
                 response = self.api_request(code)
                 if response is not None:
                     data['deviceCode'] = code
-                    with open('UniqueCode.json', 'w') as json_file:
+                    with open('Clases/json/UniqueCode.json', 'w') as json_file:
                         json.dump(data, json_file)
                     break
             else:
