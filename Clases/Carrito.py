@@ -20,11 +20,9 @@ class Carrito():
         self.codeserv = codeService()
 
     def gen_code(self):
-        with open('Clases/json/UniqueCode.json') as json_file:
+        with open('json/UniqueCode.json') as json_file:
             data = json.load(json_file)
             deviceCode = data['deviceCode']
-            
-        print(deviceCode)
 
         while True:
             if deviceCode is None or deviceCode == "":
@@ -33,7 +31,7 @@ class Carrito():
                 response = self.api_request(code)
                 if response is not None:
                     data['deviceCode'] = code
-                    with open('UniqueCode.json', 'w') as json_file:
+                    with open('json/UniqueCode.json', 'w') as json_file:
                         json.dump(data, json_file)
                     break
             else:
@@ -43,8 +41,6 @@ class Carrito():
     def api_request(self, code):
 
         api_url = "http://backend.mylittleasistant.online:8000/api/store/device"
-
-        print(self.codeserv.get_headers())
 
         body = {
             "code": code,
@@ -56,6 +52,7 @@ class Carrito():
         try:
             response = requests.post(api_url, headers=self.codeserv.get_headers(), json=body)
             response.raise_for_status()
+            print(response.json())
             return response.json()
         except requests.exceptions.HTTPError as err:
             print(f"HTTP error occurred: {err}")
