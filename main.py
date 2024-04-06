@@ -8,4 +8,5 @@ carrito = Carrito()
 carrito.genCode()
 
 for data in controlador.read_serial():
-  print(data)
+  print(data[0])
+  
