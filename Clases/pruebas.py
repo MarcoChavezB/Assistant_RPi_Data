@@ -30,7 +30,7 @@ def enviar_data(sensor_tipo, unidad, sensor_id, valor):
     }
 
     try:
-        response = requests.post('url_de_tu_api', json=json_data)
+        response = requests.post('http://backend.mylittleasistant.online:8000/api/store/device', json=json_data)
         print("Data enviada:", json_data)
         print("Respuesta de la API:", response.text)
     except Exception as e:
@@ -45,15 +45,15 @@ def guardar_localmente(json_data):
 
 controlador = Controlador()
 
-sensores_a_enviar_cada_10_segundos = ['Temp', 'Peso']
-ultimo_envio = {sensor: 0 for sensor in sensores_a_enviar_cada_10_segundos}
+sensores_lento = ['Temp', 'Peso']
+ultimo_envio = {sensor: 0 for sensor in sensores_lento}
 
 while True:
     for data in controlador.read_serial():
         sensor_tipo, unidad, sensor_id, valor = data
 
-        if sensor_tipo in sensores_a_enviar_cada_10_segundos:
-            if (time.time() - ultimo_envio[sensor_tipo]) >= 20:
+        if sensor_tipo in sensores_lento:
+            if (time.time() - ultimo_envio[sensor_tipo]) >= 15:
                 enviar_data(sensor_tipo, unidad, sensor_id, valor)
                 ultimo_envio[sensor_tipo] = time.time()
         else:

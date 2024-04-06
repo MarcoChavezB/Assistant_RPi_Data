@@ -1,3 +1,9 @@
+import json
+from datetime import datetime
+from Controlador import Controlador
+import time
+import requests  
+import platform
 class   Data():
     def __init__(self, valor=None, fecha_hora=None):
         super().__init__()
