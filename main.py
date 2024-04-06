@@ -5,7 +5,7 @@ import platform
 controlador = Controlador()
 carrito = Carrito()
 
-carrito.genCode()
+carrito.gen_code()
 
 for data in controlador.read_serial():
   print(data[0])
