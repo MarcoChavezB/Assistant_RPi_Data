@@ -3,7 +3,7 @@ import random
 import string
 import platform
 import requests
-from codeService import codeService
+from tokenService import tokenService
 
 class Carrito():
     def __init__(self,nombre=None ,clave=None, type=None, model=None):
@@ -16,6 +16,7 @@ class Carrito():
         self.type = "Car"
         self.model = "Assistant"
         self.codeserv = codeService()
+
 
     def gen_code(self):
         with open('Clases/json/UniqueCode.json') as json_file:
@@ -55,7 +56,7 @@ class Carrito():
         }
     
         try:
-            response = requests.post(api_url, headers=self.codeserv.get_headers(), json=body)
+            response = requests.post(api_url, headers=self.tokenserv.get_headers(), json=body)
             response.raise_for_status()
             print(response.json())
             return response.json()
