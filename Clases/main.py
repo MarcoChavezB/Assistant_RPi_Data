@@ -1,6 +1,6 @@
-from Clases.Controlador import Controlador
-from Clases.Carrito import Carrito
-from Clases.Data import Data
+from Controlador import Controlador
+from Carrito import Carrito
+from Data import Data
 
 
 import platform
