@@ -6,18 +6,16 @@ import requests
 from tokenService import tokenService
 
 class Carrito():
-    def __init__(self,clave=None, nombre=None, descripcion=None):
+    def __init__(self,nombre=None ,clave=None, type=None, model=None):
         super().__init__()
-        self.isConected= clave==None and nombre==None and descripcion==None
+        self.isConected= nombre = nombre and clave==None and type==None and model==None
         if self.isConected:
             self.arreglo=[]
-
-        self.arreglo=None
-
+        self.nombre=nombre
         self.clave=clave
-        self.nombre = nombre
-        self.descripcion = descripcion
-        self.tokenserv = tokenService()
+        self.type = "Car"
+        self.model = "Assistant"
+        self.codeserv = tokenService()
 
     def gen_code(self):
         with open('Clases/json/UniqueCode.json') as json_file:
@@ -27,8 +25,8 @@ class Carrito():
         while True:
             if deviceCode is None or deviceCode == "":
                 chars = string.ascii_letters + string.digits
-                code = ''.join(random.choice(chars) for _ in range(10))
-                response = self.api_request(code)
+                code = ''.join(random.choice(chars) for _ in range(10))     
+                response = self.api_request_device(code,self.type ,self.model)
                 if response is not None:
                     data['deviceCode'] = code
                     with open('Clases/json/UniqueCode.json', 'w') as json_file:
@@ -38,19 +36,26 @@ class Carrito():
                 print("Car already exists")
                 break
 
-    def api_request(self, code):
+    def device_code(self):
+        with open('Clases/json/UniqueCode.json') as json_file:
+            data = json.load(json_file)
+            self.clave = data['deviceCode']
+            return data['deviceCode']
 
-        api_url = "http://backend.mylittleasistant.online:8000/api/store/device"
+
+    def api_request_device(self, code, type,model):
+
+        api_url = "http://backend.mylittleasistant.online:8000/api/device/store"
 
         body = {
             "code": code,
-            "type": "Car",
-            "model": "Assistant",
+            "type": type,
+            "model": model,
             "os": platform.system(),
         }
-
+    
         try:
-            response = requests.post(api_url, headers=self.tokenserv.get_headers(), json=body)
+            response = requests.post(api_url, headers=self.codeserv.get_headers(), json=body)
             response.raise_for_status()
             print(response.json())
             return response.json()
@@ -63,6 +68,11 @@ class Carrito():
 if __name__ == "__main__":
     carrito = Carrito()
     carrito.gen_code()
+    print(carrito.device_code())
+    print(carrito.nombre)
+    print(carrito.type)
+    print(carrito.model)
+    
 
         
     
