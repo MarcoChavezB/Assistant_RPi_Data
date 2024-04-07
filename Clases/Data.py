@@ -26,7 +26,9 @@ class Data(Carrito):
                 return serial_data
 
     def enviar_data(self,sensor_tipo, unidad, sensor_id, valor, deviceCode):
-            json_data = {
+            json_data = { "data":
+                         [
+                             {
                 "Device": deviceCode,
                 "GenericSensorInfo": {
                     "Tipo": sensor_tipo,
@@ -40,6 +42,8 @@ class Data(Carrito):
                     "datetime": datetime.now().strftime("%d/%m/%Y %H:%M")
                 }
             }
+                ]
+                    }
 
             try:
                 api_url = requests.post('http://backend.mylittleasistant.online:8000/api/device/store', json=json_data)     
@@ -53,12 +57,13 @@ class Data(Carrito):
                     print(f"Response status: {response.status_code}")
                     print(f"Response text: {response.text}")
             except Exception as e:
-                        print("Error al enviar los datos:", e)
+                        print("Error al enviar los datos:", e, "guardando en local")
+                        
                         self.guardar_localmente(json_data)
 
 
     def guardar_localmente(self,json_data):
-            with open('data.json', 'a') as file:
+            with open('Clases/json/data.json', 'a') as file:
                 file.write(json.dumps(json_data, indent=4) + '\n')
 
 
@@ -81,7 +86,7 @@ class Data(Carrito):
                         else:
                             self.enviar_data(sensor_tipo, unidad, sensor_id, valor, device_code)
                     
-                    time.sleep(2)               
+                    time.sleep(5)               
 if __name__ == "__main__":    
     data = Data()
     data.enviar_sensor()
