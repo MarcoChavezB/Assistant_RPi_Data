@@ -20,7 +20,7 @@ class Carrito():
         self.tokenserv = tokenService()
 
     def gen_code(self):
-        with open('json/UniqueCode.json') as json_file:
+        with open('Clases/json/UniqueCode.json') as json_file:
             data = json.load(json_file)
             deviceCode = data['deviceCode']
 
@@ -31,7 +31,7 @@ class Carrito():
                 response = self.api_request(code)
                 if response is not None:
                     data['deviceCode'] = code
-                    with open('json/UniqueCode.json', 'w') as json_file:
+                    with open('Clases/json/UniqueCode.json', 'w') as json_file:
                         json.dump(data, json_file)
                     break
             else:
