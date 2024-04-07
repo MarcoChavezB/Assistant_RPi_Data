@@ -15,8 +15,7 @@ class Carrito():
         self.clave=clave
         self.type = "Car"
         self.model = "Assistant"
-        self.codeserv = codeService()
-
+        self.codeserv = tokenService()
 
     def gen_code(self):
         with open('Clases/json/UniqueCode.json') as json_file:
@@ -56,7 +55,7 @@ class Carrito():
         }
     
         try:
-            response = requests.post(api_url, headers=self.tokenserv.get_headers(), json=body)
+            response = requests.post(api_url, headers=self.codeserv.get_headers(), json=body)
             response.raise_for_status()
             print(response.json())
             return response.json()

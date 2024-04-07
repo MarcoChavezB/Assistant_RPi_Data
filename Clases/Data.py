@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 from Controlador import Controlador
 from Carrito import Carrito
-from codeService import codeService
+from tokenService import tokenService
 import time
 import requests  
 import platform
@@ -16,7 +16,7 @@ class Data(Carrito):
         self.arreglo=None
         self.tipo= valor
         self.unidad = fecha_hora
-        codeserv = codeService()
+        codeserv = tokenService()
     
     def read_serial():
                 controlador = Controlador() 

@@ -110,3 +110,101 @@
         "datetime": "06/04/2024 19:23"
     }
 }
+{
+    "Device": "jwRHaHngqk",
+    "GenericSensorInfo": {
+        "Tipo": "Peso",
+        "Unidad": "gr"
+    },
+    "PhysicalSensorInfo": {
+        "No.Sensor": "00"
+    },
+    "Data": {
+        "valor": "20.00",
+        "datetime": "06/04/2024 19:32"
+    }
+}
+{
+    "Device": "jwRHaHngqk",
+    "GenericSensorInfo": {
+        "Tipo": "Incli",
+        "Unidad": "grd"
+    },
+    "PhysicalSensorInfo": {
+        "No.Sensor": "01"
+    },
+    "Data": {
+        "valor": "-0.32",
+        "datetime": "06/04/2024 19:32"
+    }
+}
+{
+    "Device": "jwRHaHngqk",
+    "GenericSensorInfo": {
+        "Tipo": "Vel",
+        "Unidad": "m/s"
+    },
+    "PhysicalSensorInfo": {
+        "No.Sensor": "02"
+    },
+    "Data": {
+        "valor": "10.00",
+        "datetime": "06/04/2024 19:32"
+    }
+}
+{
+    "Device": "jwRHaHngqk",
+    "GenericSensorInfo": {
+        "Tipo": "Temp",
+        "Unidad": "C"
+    },
+    "PhysicalSensorInfo": {
+        "No.Sensor": "03"
+    },
+    "Data": {
+        "valor": " NAN",
+        "datetime": "06/04/2024 19:32"
+    }
+}
+{
+    "Device": "jwRHaHngqk",
+    "GenericSensorInfo": {
+        "Tipo": "Gps ",
+        "Unidad": " lat "
+    },
+    "PhysicalSensorInfo": {
+        "No.Sensor": " 02 "
+    },
+    "Data": {
+        "valor": " 1234.1234, 1234.1234",
+        "datetime": "06/04/2024 19:32"
+    }
+}
+{
+    "Device": "jwRHaHngqk",
+    "GenericSensorInfo": {
+        "Tipo": "Incli",
+        "Unidad": "grd"
+    },
+    "PhysicalSensorInfo": {
+        "No.Sensor": "01"
+    },
+    "Data": {
+        "valor": "-0.32",
+        "datetime": "06/04/2024 19:32"
+    }
+}
+{
+    "Device": "jwRHaHngqk",
+    "GenericSensorInfo": {
+        "Tipo": "Vel",
+        "Unidad": "m/s"
+    },
+    "PhysicalSensorInfo": {
+        "No.Sensor": "02"
+    },
+    "Data": {
+        "valor": "10.00",
+        "datetime": "06/04/2024 19:32"
+    }
+}
