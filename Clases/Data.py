@@ -16,7 +16,7 @@ class Data(Carrito):
         self.arreglo=None
         self.tipo= valor
         self.unidad = fecha_hora
-        self.codeserv = tokenService()
+        codeserv = tokenService()
     
     def read_serial():
                 controlador = Controlador() 
@@ -24,8 +24,18 @@ class Data(Carrito):
                 for data in controlador.read_serial():
                     serial_data.append(data)
                 return serial_data
-
-    def enviar_data(self,sensor_tipo, unidad, sensor_id, valor, deviceCode):
+            
+    def sinarduino(self):
+        return [
+            ['peso', 'gr', '00', '20.00'],
+            ['gps', ' lat ', ' 02 ', ' 1234.12'],
+            ['peso', 'gr', '00', '20.00'],
+            ['incli', 'grd', '01', '-0.15'],
+            ['vel', 'm/s', '02', '10.00'],
+            ['Temp', 'C', '03', ' NAN'],
+            ['gps', ' lat ', ' 02 ', ' 1234.1234']
+        ]
+    def enviar_data(self,sensor_tipo, unidad, sensor_id, valor, deviceCode, api_url):
             json_data = { "data":
                          [
                              {
@@ -44,13 +54,12 @@ class Data(Carrito):
             }
                 ]
                     }
-
+            
             try:
-                api_url = requests.post('http://backend.mylittleasistant.online:8000/api/device/store', json=json_data)     
-                
                 response = requests.post(api_url, headers = self.codeserv.get_headers(), json=json_data)
                 response.raise_for_status()
                 print(response.json())
+                print("sensor enviado:" , sensor_tipo)
                 return response.json()
             except requests.exceptions.HTTPError as err:
                     print(f"HTTP error occurred: {err}")
@@ -75,18 +84,20 @@ class Data(Carrito):
         ultimo_envio = {sensor: 0 for sensor in sensores_lento}
 
         while True:
-                    for data in controlador.read_serial():
+                     for data in controlador.read_serial():
                         sensor_tipo, unidad, sensor_id, valor = data
-
+                       
                         if sensor_tipo in sensores_lento:
                             if (time.time() - ultimo_envio[sensor_tipo]) >= 15:
                                 device_code = carrito.device_code()
-                                self.enviar_data(sensor_tipo, unidad, sensor_id, valor, device_code )
+                                api_url = f"http://backend.mylittleasistant.online:8000/api/device/{sensor_tipo}/store"
+                                self.enviar_data(sensor_tipo, unidad, sensor_id, valor, device_code, api_url )
                                 ultimo_envio[sensor_tipo] = time.time()
-                        else:
-                            self.enviar_data(sensor_tipo, unidad, sensor_id, valor, device_code)
+                        else:   
+                                device_code = carrito.device_code()
+                                api_url = f"http://backend.mylittleasistant.online:8000/api/device/{sensor_tipo}/store"
+                                self.enviar_data(sensor_tipo, unidad, sensor_id, valor, device_code , api_url)
                     
-                    time.sleep(5)               
+                        time.sleep(1)               
 if __name__ == "__main__":    
     data = Data()
-    data.enviar_sensor()
