@@ -27,30 +27,24 @@ class Data(Carrito):
             
     def sinarduino(self):
         return [
-            ['peso', 'gr', '00', '20.00'],
-            ['gps', ' lat ', ' 02 ', ' 1234.12'],
-            ['peso', 'gr', '00', '20.00'],
-            ['incli', 'grd', '01', '-0.15'],
-            ['vel', 'm/s', '02', '10.00'],
+            ['Peso', 'gr', '00', '20.00'],
+            ['Gps', ' lat ', ' 02 ', ' 1234.12'],
+            ['Peso', 'gr', '00', '20.00'],
+            ['Incli', 'grd', '01', '-0.15'],
+            ['Vel', 'm/s', '02', '10.00'],
             ['Temp', 'C', '03', ' NAN'],
-            ['gps', ' lat ', ' 02 ', ' 1234.1234']
+            ['Gps', ' lat ', ' 02 ', ' 1234.1234']
         ]
     def enviar_data(self,sensor_tipo, unidad, sensor_id, valor, deviceCode, api_url):
             json_data = { "data":
                          [
                              {
                 "Device": deviceCode,
-                "GenericSensorInfo": {
-                    "Tipo": sensor_tipo,
-                    "Unidad": unidad
-                },
-                "PhysicalSensorInfo": {
-                    "No.Sensor": sensor_id
-                },
-                "Data": {
-                    "valor": valor,
-                    "datetime": datetime.now().strftime("%d/%m/%Y %H:%M")
-                }
+                "Tipo": sensor_tipo,
+                "Unidad": unidad,
+                "No.Sensor": sensor_id,
+                "valor": valor,
+                "datetime": datetime.now().strftime("%d/%m/%Y %H:%M")
             }
                 ]
                     }
@@ -84,7 +78,7 @@ class Data(Carrito):
         ultimo_envio = {sensor: 0 for sensor in sensores_lento}
 
         while True:
-                     for data in controlador.read_serial():
+                     for data in self.sinarduino():
                         sensor_tipo, unidad, sensor_id, valor = data
                        
                         if sensor_tipo in sensores_lento:
@@ -101,3 +95,4 @@ class Data(Carrito):
                         time.sleep(1)               
 if __name__ == "__main__":    
     data = Data()
+    data.enviar_sensor()
