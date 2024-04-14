@@ -42,9 +42,9 @@ class Data(Carrito):
                 "Device": deviceCode,
                 "Tipo": sensor_tipo,
                 "Unidad": unidad,
-                "No.Sensor": sensor_id,
-                "valor": valor,
-                "datetime": datetime.now().strftime("%d/%m/%Y %H:%M")
+                "NoSensor": sensor_id,
+                "Valor": valor,
+                "Datetime": datetime.now().strftime("%d/%m/%Y %H:%M")
             }
                 ]
                     }
