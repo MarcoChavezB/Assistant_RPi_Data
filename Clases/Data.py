@@ -17,13 +17,6 @@ class Data(Carrito):
         self.tipo= valor
         self.unidad = fecha_hora
         codeserv = tokenService()
-    
-    def read_serial():
-                controlador = Controlador() 
-                serial_data = []
-                for data in controlador.read_serial():
-                    serial_data.append(data)
-                return serial_data
             
     def sinarduino(self):
         return [
@@ -74,25 +67,30 @@ class Data(Carrito):
         controlador = Controlador()
         carrito = Carrito()
 
-        sensores_lento = ['Temp', 'Peso']
-        ultimo_envio = {sensor: 0 for sensor in sensores_lento}
+        sensores_tiempo = {
+            'Peso': 10,
+            'Gps': 15,
+            'Incli': 20,
+            'Temp': 30,
+            'Vel': 25
+        }
+        ultimo_envio = {sensor: 0 for sensor in sensores_tiempo}
 
         while True:
-                     for data in self.sinarduino():
+                     for data in controlador.read_serial():
                         sensor_tipo, unidad, sensor_id, valor = data
                        
-                        if sensor_tipo in sensores_lento:
-                            if (time.time() - ultimo_envio[sensor_tipo]) >= 15:
+                        if sensor_tipo in sensores_tiempo:
+                            if (time.time() - ultimo_envio[sensor_tipo]) >= sensores_tiempo[sensor_tipo]:
                                 device_code = carrito.device_code()
                                 api_url = f"http://backend.mylittleasistant.online:8000/api/device/{sensor_tipo}/store"
                                 self.enviar_data(sensor_tipo, unidad, sensor_id, valor, device_code, api_url )
                                 ultimo_envio[sensor_tipo] = time.time()
-                        else:   
-                                device_code = carrito.device_code()
-                                api_url = f"http://backend.mylittleasistant.online:8000/api/device/{sensor_tipo}/store"
-                                self.enviar_data(sensor_tipo, unidad, sensor_id, valor, device_code , api_url)
                     
-                        time.sleep(1)               
+                        time.sleep(1)         
+                        
+                   
+      
 if __name__ == "__main__":    
     data = Data()
     data.enviar_sensor()
