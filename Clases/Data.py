@@ -98,6 +98,8 @@ class Data(Carrito):
                                     self.enviar_data(sensor_tipo, unidad, sensor_id, valor, device_code, api_url )
                                     ultimo_valor[sensor_tipo] = valor
                                     ultimo_envio[sensor_tipo] = time.time()
+                        else:
+                            print("Hola, este sensor no está definido en sensores_tiempo")
                     
                         time.sleep(1)         
                         
