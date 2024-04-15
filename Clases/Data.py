@@ -87,7 +87,7 @@ class Data(Carrito):
         ultimo_valor = {sensor: None for sensor in sensores_tiempo}
 
         while True:
-                     for data in self.sinarduino():
+                     for data in controlador.read_serial():
                         sensor_tipo, unidad, sensor_id, valor = data
                        
                         if sensor_tipo in sensores_tiempo:
