@@ -8,7 +8,7 @@ class Controlador:
    def add (self, data):
       self.data.append(data)
       
-   def read_serial(self, port="", baud=9600):
+   def read_serial(self, port="", baud=19200):
         port = self.find_port()
         with serial.Serial(port, baud) as ser:
             try:
