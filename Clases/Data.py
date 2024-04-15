@@ -99,7 +99,7 @@ class Data(Carrito):
                                     ultimo_valor[sensor_tipo] = valor
                                     ultimo_envio[sensor_tipo] = time.time()
                         else:
-                            print("Hola, este sensor no está definido en sensores_tiempo")
+                            print("Hola, este sensor no esta en la lista de sensores" + sensor_tipo)
                     
                         time.sleep(1)         
                         
