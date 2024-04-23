@@ -47,15 +47,15 @@ class Data(Carrito):
                 if self.arreglo==None:
                     self.arreglo=json_data
                 else:
-                    if self.arreglo["data"][0]["Valor"]==json_data["data"][0]["Valor"]:
-                        print("no se envio el dato porque es el mismo")
-                        return
-                    else:
+                   # if self.arreglo["data"][0]["Valor"]==json_data["data"][0]["Valor"]:
+                    #    print("no se envio el dato porque es el mismo")
+                     #   return
+                   # else:
                         self.arreglo=json_data
                 response = requests.post(api_url, headers = self.codeserv.get_headers(), json=json_data)
                 response.raise_for_status()
                 print(response.json())
-                print("sensor enviado:" , sensor_tipo)
+                print("sensor enviado:" , sensor_tipo, valor)
                 return response.json()
             except requests.exceptions.HTTPError as err:
                     print(f"HTTP error occurred: {err}")
@@ -77,11 +77,11 @@ class Data(Carrito):
         carrito = Carrito()
 
         sensores_tiempo = {
-            'Peso': 10,
-            'Gps': 15,
-            'Incli': 10,
-            'Temp': 30,
-            'Vel': 25
+            'Peso': 1,
+            'Gps': 1,
+            'Incli': 1,
+            'Temp': 1,
+            'Vel': 1
         }
         ultimo_envio = {sensor: 0 for sensor in sensores_tiempo}
         ultimo_valor = {sensor: None for sensor in sensores_tiempo}
