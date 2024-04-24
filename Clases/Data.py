@@ -96,14 +96,14 @@ class Data(Carrito):
 
         while True:
                      for data in self.sinarduino():
-                        if data.startswith("gps"):
+                        """if data.startswith("gps"):
                             sensor_tipo = 'Gps'
                             unidad = 'lat,long' 
                             sensor_id = '00'  
                             coordenadas = data.strip().split('-')[1]
                             valor = coordenadas.replace(",", ", ")
                         else:
-                                continue 
+                                continue """
                         sensor_tipo, unidad, sensor_id, valor = data
                         
                         if sensor_tipo in sensores_tiempo:
