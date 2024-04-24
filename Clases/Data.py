@@ -78,6 +78,7 @@ class Data(Carrito):
 
         sensores_tiempo = {
             'Peso': 1,
+            
             'Incli': 1,
             'Temp': 1,
             'Vel': 1
@@ -87,7 +88,7 @@ class Data(Carrito):
 
         while True:
                      for data in controlador.read_serial():
-                       
+                      
                         sensor_tipo, unidad, sensor_id, valor = data
                         
                         if sensor_tipo in sensores_tiempo:
@@ -99,7 +100,7 @@ class Data(Carrito):
                                         ultimo_valor[sensor_tipo] = valor
                                         ultimo_envio[sensor_tipo] = time.time()
                         else:
-                                print("Hola, este sensor no esta en la lista de sensores " + sensor_tipo + " " + valor)
+                                print("Hola, este sensor no esta en la lista de sensores " + sensor_tipo)
                         
                         time.sleep(1)         
                         
