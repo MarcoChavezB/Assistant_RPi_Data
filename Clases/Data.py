@@ -26,15 +26,7 @@ class Data(Carrito):
             ['Incli', 'grd', '01', '-0.15'],
             ['Vel', 'm/s', '02', '10.00'],
             ['Temp', 'C', '03', ' NAN'],
-            ['Gps', ' lat ', ' 02 ', '00'],
-            ['Línea GPRMC no válida o incompleta.',
-            'Procesando línea GPRMC: $GPRMC,221613.206,A,2531.5132,N,10319.1272,W,0.33,5.29,230424,,,A*7C',
-
-            'gps-25.315132,-103.191272',
-            'Procesando línea GPRMC: 7F',
-
-            'Línea GPRMC no válida o incompleta''Procesando línea GPRMC: 70']
-           
+            ['Gps', ' lat ', ' 02 ', '00']
         ]
     def enviar_data(self,sensor_tipo, unidad, sensor_id, valor, deviceCode, api_url):
             json_data = { "data":
@@ -55,15 +47,15 @@ class Data(Carrito):
                 if self.arreglo==None:
                     self.arreglo=json_data
                 else:
-                #    if self.arreglo["data"][0]["Valor"]==json_data["data"][0]["Valor"]:
-                #        print("no se envio el dato porque es el mismo")
-                #        return
-                #    else:
+                    if self.arreglo["data"][0]["Valor"]==json_data["data"][0]["Valor"]:
+                        print("no se envio el dato porque es el mismo")
+                        return
+                    else:
                         self.arreglo=json_data
                 response = requests.post(api_url, headers = self.codeserv.get_headers(), json=json_data)
                 response.raise_for_status()
                 print(response.json())
-                print("sensor enviado:" , sensor_tipo, valor)
+                print("sensor enviado:" , sensor_tipo)
                 return response.json()
             except requests.exceptions.HTTPError as err:
                     print(f"HTTP error occurred: {err}")
@@ -85,38 +77,30 @@ class Data(Carrito):
         carrito = Carrito()
 
         sensores_tiempo = {
-            'Peso': 1,
-            'Gps': 1,
+            'Peso': 5,
+            'Gps': 3,  
             'Incli': 1,
-            'Temp': 1,
-            'Vel': 1
+            'Temp': 3,
+            'Vel': 2
         }
         ultimo_envio = {sensor: 0 for sensor in sensores_tiempo}
         ultimo_valor = {sensor: None for sensor in sensores_tiempo}
 
         while True:
-                     for data in self.sinarduino():
-                        """if data.startswith("gps"):
-                            sensor_tipo = 'Gps'
-                            unidad = 'lat,long' 
-                            sensor_id = '00'  
-                            coordenadas = data.strip().split('-')[1]
-                            valor = coordenadas.replace(",", ", ")
-                        else:
-                                continue """
+                     for data in controlador.read_serial():
                         sensor_tipo, unidad, sensor_id, valor = data
-                        
+                       
                         if sensor_tipo in sensores_tiempo:
-                                if (time.time() - ultimo_envio[sensor_tipo]) >= sensores_tiempo[sensor_tipo]:
-                                    if valor != ultimo_valor[sensor_tipo]:    
-                                        device_code = carrito.device_code()
-                                        api_url = f"http://backend.mylittleasistant.online:8000/api/device/{sensor_tipo}/store"
-                                        self.enviar_data(sensor_tipo, unidad, sensor_id, valor, device_code, api_url )
-                                        ultimo_valor[sensor_tipo] = valor
-                                        ultimo_envio[sensor_tipo] = time.time()
+                            if (time.time() - ultimo_envio[sensor_tipo]) >= sensores_tiempo[sensor_tipo]:
+                                if valor != ultimo_valor[sensor_tipo]:    
+                                    device_code = carrito.device_code()
+                                    api_url = f"http://backend.mylittleasistant.online:8000/api/device/{sensor_tipo}/store"
+                                    self.enviar_data(sensor_tipo, unidad, sensor_id, valor, device_code, api_url )
+                                    ultimo_valor[sensor_tipo] = valor
+                                    ultimo_envio[sensor_tipo] = time.time()
                         else:
-                                print("Hola, este sensor no esta en la lista de sensores " + sensor_tipo)
-                        
+                            print("Hola, este sensor no esta en la lista de sensores " + sensor_tipo)
+                    
                         time.sleep(1)         
                         
                    

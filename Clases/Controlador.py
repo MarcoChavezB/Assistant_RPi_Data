@@ -8,14 +8,12 @@ class Controlador:
    def add (self, data):
       self.data.append(data)
       
-   def read_serial(self, port="/dev/ttyUSB0", baud=19200):
-        #port = self.find_port()
-        port = "/dev/ttyUSB0"
+   def read_serial(self, port="", baud=19200):
+        port = self.find_port()
         with serial.Serial(port, baud) as ser:
             try:
                 while True:
                     data = ser.readline().decode().strip()
-                    print(data)
                     yield self.format_data_serial(data)
             except KeyboardInterrupt:
                 pass
