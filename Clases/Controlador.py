@@ -10,7 +10,7 @@ class Controlador:
       
       
    def read_serial(self, port="/dev/ttyUSB0", baud=19200):
-        port = self.find_port()
+        port = '/dev/ttyUSB0'
         with serial.Serial(port, baud) as ser:
             try:
                 while True:
