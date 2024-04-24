@@ -8,9 +8,8 @@ class Controlador:
    def add (self, data):
       self.data.append(data)
       
-      
-   def read_serial(self, port="/dev/ttyUSB0", baud=19200):
-        port = '/dev/ttyUSB0'
+   def read_serial(self, port="", baud=19200):
+        port = "/dev/ttyUSB0"
         with serial.Serial(port, baud) as ser:
             try:
                 while True:
@@ -37,7 +36,8 @@ class Controlador:
    def format_data_serial(self, data):
       return data.split("|")
    
-if __name__ == "__main__":    
-    cont = Controlador()
-    while True:
-      print(cont.read_serial())
+# if __name__ == "__main__":
+#     controlador = Controlador()
+#     for data in controlador.read_serial():
+#         controlador.add(data)
+#         print(data)

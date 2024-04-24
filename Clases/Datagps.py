@@ -2,6 +2,12 @@ import serial
 from Controlador import Controlador
 from Data import Data
 from tokenService import tokenService
+from Controlador import Controlador\
+
+import serial
+from Controlador import Controlador
+from Data import Data
+from tokenService import tokenService
 from Controlador import Controlador
 from Carrito import Carrito
 from datetime import datetime
@@ -13,8 +19,8 @@ import platform
 
 
 class Datagps(Data):
-    def __init__(self, latitud=None, longitud=None):
-        super().__init__()
+    def _init_(self, latitud=None, longitud=None):
+        super()._init_()
         self.isConected= latitud==None and longitud==None 
         if self.isConected:  
             self.arreglo=[]
@@ -22,35 +28,27 @@ class Datagps(Data):
         self.arreglo=None
         codeserv = tokenService()
    
+ 
     def readgps(self):
-            ser = serial.Serial('COM4', 19200)
-            #
-
-            try:
-                    while True:
-                        # Lee datos del puerto serie
-                        data = ser.readline().decode().strip()
-                        print( data)
-
-            except KeyboardInterrupt:
-                ser.close() # Cierra el puerto serie cuando se interrumpe el programa
-        
-    #    
-                        
-    def readgps(self):
-        ser = serial.Serial('COM4', 19200)
+        ser = serial.Serial('/dev/ttyUSB0', 19200)
 
         try:
             while True:
                 # Lee datos del puerto serie
                 data = ser.readline().decode().strip()
                 print(data)
-                # Extraer números de la cadena "gps-873829,6743428" usando expresiones regulares
-                numeros = re.findall(r'\d+', data)
-                if len(numeros) >= 2:
-                    latitud, longitud = numeros[:2]  # Tomar los dos primeros números como latitud y longitud
-                    # Realizar el POST con los números
-                    self.enviar_sensor(latitud, longitud)
+                if data.startswith("|") and data.endswith("|"):
+                        # Elimina los caracteres "|" del principio y final de la cadena
+                    data = data.strip("|")
+                    print(data)
+                    # Divide la cadena en elementos utilizando el carácter "|" como delimitador
+                    datos_separados = data.split("|")
+                    if len(datos_separados) >= 2:
+                        latitud, longitud = datos_separados[:2]  # Tomar los dos primeros elementos como latitud y longitud
+                        # Realizar el POST con los datos
+                        print(latitud,longitud)
+                        self.enviar_sensor(latitud, longitud)
+                    
                     
         except KeyboardInterrupt:
             ser.close() # Cierra el puerto serie cuando se interrumpe el programa
@@ -68,7 +66,7 @@ class Datagps(Data):
         api_url = f"http://backend.mylittleasistant.online:8000/api/device/{sensor_tipo}/store"
         
         try:
-            response = requests.post(api_url, headers=codeserv.get_headers(), json={"data": [{
+            response = requests.post(api_url, headers=self.codeserv.get_headers(), json={"data": [{
                 "Device": device_code,
                 "Tipo": sensor_tipo,
                 "Unidad": unidad,
@@ -93,9 +91,8 @@ class Datagps(Data):
             }]})
 
     def guardar_localmente(self, json_data):
-        with open('Clases/json/data.json', 'a') as file:
+        with open('Clases/json/gps.json', 'a') as file:
             file.write(json.dumps(json_data, indent=4) + '\n')
-
     
     
 if __name__ == "__main__":    

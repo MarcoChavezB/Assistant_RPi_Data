@@ -87,10 +87,8 @@ class Data(Carrito):
         ultimo_valor = {sensor: None for sensor in sensores_tiempo}
 
         while True:
-                     for data in controlador.read_serial():
-                      
-                        sensor_tipo, unidad, sensor_id, valor = data
-                        
+                     for sensor_data in controlador.read_serial():
+                        sensor_tipo, unidad, sensor_id, valor = sensor_data
                         if sensor_tipo in sensores_tiempo:
                                 if (time.time() - ultimo_envio[sensor_tipo]) >= sensores_tiempo[sensor_tipo]:
                                     if valor != ultimo_valor[sensor_tipo]:    
