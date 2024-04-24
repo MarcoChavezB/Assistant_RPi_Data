@@ -1,7 +1,9 @@
+import serial
 from Controlador import Controlador
 from Data import Data
 from tokenService import tokenService
-from Controlador import Controlador
+from Controlador import Controlador\
+
 
 
 class Datagps(Data):
@@ -13,11 +15,26 @@ class Datagps(Data):
     
         self.arreglo=None
         codeserv = tokenService()
+   
+    def readgps(self):
+            ser = serial.Serial('COM4', 19200)
+            #
+
+            try:
+                    while True:
+                        # Lee datos del puerto serie
+                        data = ser.readline().decode().strip()
+                        print( data)
+
+            except KeyboardInterrupt:
+                ser.close() # Cierra el puerto serie cuando se interrumpe el programa
+        
+
     
     
 if __name__ == "__main__":    
         datagps = Datagps()
-        Controlador.read_serial()
+        datagps.readgps()
         
     
 
