@@ -3,6 +3,7 @@ from datetime import datetime
 from Controlador import Controlador
 from Carrito import Carrito
 from tokenService import tokenService
+from Datagps import Datagps
 import time
 import requests  
 import platform
@@ -85,9 +86,9 @@ class Data(Carrito):
         }
         ultimo_envio = {sensor: 0 for sensor in sensores_tiempo}
         ultimo_valor = {sensor: None for sensor in sensores_tiempo}
-
+        gps = Datagps()
         while True:
-                     for sensor_data in controlador.read_serial():
+                     for sensor_data in self.sinarduino():
                         sensor_tipo, unidad, sensor_id, valor = sensor_data
                         if sensor_tipo in sensores_tiempo:
                                 if (time.time() - ultimo_envio[sensor_tipo]) >= sensores_tiempo[sensor_tipo]:
@@ -97,8 +98,10 @@ class Data(Carrito):
                                         self.enviar_data(sensor_tipo, unidad, sensor_id, valor, device_code, api_url )
                                         ultimo_valor[sensor_tipo] = valor
                                         ultimo_envio[sensor_tipo] = time.time()
+                                        #gps.readgps()
                         else:
                                 print("Hola, este sensor no esta en la lista de sensores " + sensor_tipo)
+                                
                         
                         time.sleep(1)         
                         

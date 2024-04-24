@@ -9,9 +9,6 @@ carrito = Carrito()
 data = Data()
 gps = Datagps()
 carrito.gen_code()
-while True:
+data.enviar_sensor()
     
-    
-    data.enviar_sensor()
-    gps.readgps()
     

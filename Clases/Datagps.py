@@ -6,7 +6,7 @@ from Controlador import Controlador\
 
 import serial
 from Controlador import Controlador
-from Data import Data
+
 from tokenService import tokenService
 from Controlador import Controlador
 from Carrito import Carrito
@@ -18,7 +18,7 @@ import platform
 
 
 
-class Datagps(Data):
+class Datagps():
     def _init_(self, latitud=None, longitud=None):
         super()._init_()
         self.isConected= latitud==None and longitud==None 
