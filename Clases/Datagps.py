@@ -2,7 +2,12 @@ import serial
 from Controlador import Controlador
 from Data import Data
 from tokenService import tokenService
-from Controlador import Controlador\
+from Controlador import Controlador
+from datetime import datetime
+import time
+import json
+import requests  
+import platform
 
 
 
@@ -29,7 +34,9 @@ class Datagps(Data):
             except KeyboardInterrupt:
                 ser.close() # Cierra el puerto serie cuando se interrumpe el programa
         
-
+    #    
+                        
+                   
     
     
 if __name__ == "__main__":    

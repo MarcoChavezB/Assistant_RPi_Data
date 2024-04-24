@@ -18,7 +18,7 @@ class Carrito():
         self.codeserv = tokenService()
 
     def gen_code(self):
-        with open('Clases/json/UniqueCode.json') as json_file:
+        with open('/home/server/Assistant_RPi_Data/Clases/json/UniqueCode.json') as json_file:
             data = json.load(json_file)
             deviceCode = data['deviceCode']
 
@@ -29,7 +29,7 @@ class Carrito():
                 response = self.api_request_device(code,self.type ,self.model)
                 if response is not None:
                     data['deviceCode'] = code
-                    with open('Clases/json/UniqueCode.json', 'w') as json_file:
+                    with open('/home/server/Assistant_RPi_Data/Clases/json/UniqueCode.json', 'w') as json_file:
                         json.dump(data, json_file)
                     break
             else:
@@ -37,7 +37,7 @@ class Carrito():
                 break
 
     def device_code(self):
-        with open('Clases/json/UniqueCode.json') as json_file:
+        with open('/home/server/Assistant_RPi_Data/Clases/json/UniqueCode.json') as json_file:
             data = json.load(json_file)
             self.clave = data['deviceCode']
             return data['deviceCode']
