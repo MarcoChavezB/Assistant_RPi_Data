@@ -35,3 +35,8 @@ class Controlador:
 
    def format_data_serial(self, data):
       return data.split("|")
+   
+if __name__ == "__main__":    
+    cont = Controlador()
+    while True:
+      print(cont.read_serial())
