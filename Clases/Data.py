@@ -77,11 +77,11 @@ class Data(Carrito):
         carrito = Carrito()
 
         sensores_tiempo = {
-            'Peso': 10,
-            'Gps': 15,
-            'Incli': 10,
-            'Temp': 30,
-            'Vel': 25
+            'Peso': 5,
+            'Gps': 3,  
+            'Incli': 1,
+            'Temp': 3,
+            'Vel': 2
         }
         ultimo_envio = {sensor: 0 for sensor in sensores_tiempo}
         ultimo_valor = {sensor: None for sensor in sensores_tiempo}
